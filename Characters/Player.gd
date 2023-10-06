@@ -7,6 +7,10 @@ extends CharacterBody2D
 @export var max_dash_frames = 30;
 
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D 
+@onready var particle_emitter : GPUParticles2D = $GPUParticles2D 
+@onready var camera : Camera2D = $Camera2D;
+@onready var default_hitbox : CollisionShape2D = $DefaultHitbox;
+@onready var dash_hitbox : CollisionShape2D = $DashHitbox;
 var double_jump_velocity = jump_velocity * 0.66
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -21,6 +25,8 @@ var dash_velocity_multiplier = 1;
 var sprite_flipped = false;
 
 func _physics_process(delta):
+	
+	"particle_emitter.emitting = false;"
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -30,10 +36,8 @@ func _physics_process(delta):
 		if is_on_floor():
 			velocity.y = jump_velocity
 		elif  double_jump_ready:
-			if velocity.y <= 0:
-				velocity.y += double_jump_velocity
-			else:
-				velocity.y = double_jump_velocity
+			velocity.y = double_jump_velocity
+			emit_particle_burst(Vector3(0,1,0));
 			double_jump_ready = false
 		
 	if is_on_floor():
@@ -53,10 +57,13 @@ func _physics_process(delta):
 		dashing = true;
 		dash_ready = false;
 		dash_frame = 0;
+		default_hitbox.disabled = true;
+		dash_hitbox.disabled = false;
 		if animated_sprite.flip_h:
 			dash_velocity_multiplier = -1
 		else:
 			dash_velocity_multiplier = 1
+		emit_particle_burst(Vector3(0,dash_velocity_multiplier,0));
 		
 	
 	if dashing:
@@ -64,6 +71,8 @@ func _physics_process(delta):
 		velocity.y = 0;
 		if dash_frame > max_dash_frames:
 			dash_frame = 0;
+			default_hitbox.disabled = false;
+			dash_hitbox.disabled = true;
 			dashing = false;
 		dash_frame += 1;
 	
@@ -89,3 +98,19 @@ func update_animation():
 			animated_sprite.flip_h = true;
 		elif direction.x > 0:
 			animated_sprite.flip_h = false;
+			
+func emit_particle_burst(particle_vector):
+	particle_emitter.restart();
+	"particle_emitter.process_material.initial_velocity_max = 100.00;"
+	particle_emitter.process_material.set("direction", particle_vector);
+	particle_emitter.emitting = true;
+
+
+func _on_room_detector_area_entered(area):
+	var collision_shape = area.get_node("CollisionShape2D");
+	var size = collision_shape.shape.extents * 2;
+	camera.limit_top = collision_shape.global_position.y - size.y / 2;
+	camera.limit_bottom = collision_shape.global_position.y + size.y / 2;
+	camera.limit_left = collision_shape.global_position.x - size.x / 2;
+	camera.limit_right = collision_shape.global_position.x + size.x / 2;
+	

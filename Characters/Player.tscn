@@ -1,9 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://bmrxvp84pylld"]
+[gd_scene load_steps=20 format=3 uid="uid://bmrxvp84pylld"]
 
 [ext_resource type="Texture2D" uid="uid://c4qr2aycapvsd" path="res://Sprites/pete sheet.png" id="1_q87dr"]
+[ext_resource type="Script" path="res://Characters/Player.gd" id="1_s8srl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfnl8"]
 size = Vector2(4, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m74n4"]
+size = Vector2(4, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8l1l1"]
 atlas = ExtResource("1_q87dr")
@@ -117,13 +121,48 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_coejg"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 100.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ht2dl"]
+size = Vector2(4, 8)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_s8srl")
+
+[node name="DefaultHitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_bfnl8")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="DashHitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_m74n4")
+disabled = true
+debug_color = Color(0.988235, 0.0980392, 0, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2iimc")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 6
+process_material = SubResource("ParticleProcessMaterial_coejg")
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.9
+randomness = 1.0
+
+[node name="RoomDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomDetector"]
+shape = SubResource("RectangleShape2D_ht2dl")
+
+[connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]
