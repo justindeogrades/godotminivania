@@ -79,6 +79,7 @@ func _physics_process(delta):
 	
 	update_animation()
 	move_and_slide()
+	detect_hazards()
 
 func update_animation():
 	if dashing:
@@ -98,7 +99,14 @@ func update_animation():
 			animated_sprite.flip_h = true;
 		elif direction.x > 0:
 			animated_sprite.flip_h = false;
-			
+
+func detect_hazards():
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider().name == "Hazards":
+			get_tree().reload_current_scene()
+
+
 func emit_particle_burst(particle_vector):
 	particle_emitter.restart();
 	"particle_emitter.process_material.initial_velocity_max = 100.00;"
