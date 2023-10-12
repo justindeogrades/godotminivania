@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://bmrxvp84pylld"]
+[gd_scene load_steps=30 format=3 uid="uid://bmrxvp84pylld"]
 
 [ext_resource type="Texture2D" uid="uid://c4qr2aycapvsd" path="res://Sprites/pete sheet.png" id="1_q87dr"]
 [ext_resource type="Script" path="res://Characters/Player.gd" id="1_s8srl"]
+[ext_resource type="Texture2D" uid="uid://kcpqjqdpton2" path="res://Sprites/shoes sheet.png" id="3_plovu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfnl8"]
 size = Vector2(4, 8)
@@ -121,6 +122,93 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtv1u"]
+atlas = ExtResource("3_plovu")
+region = Rect2(8, 112, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stqjg"]
+atlas = ExtResource("3_plovu")
+region = Rect2(8, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsd34"]
+atlas = ExtResource("3_plovu")
+region = Rect2(40, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2umu"]
+atlas = ExtResource("3_plovu")
+region = Rect2(72, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfdk1"]
+atlas = ExtResource("3_plovu")
+region = Rect2(104, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2gqv"]
+atlas = ExtResource("3_plovu")
+region = Rect2(8, 80, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lamj"]
+atlas = ExtResource("3_plovu")
+region = Rect2(8, 48, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1o86v"]
+atlas = ExtResource("3_plovu")
+region = Rect2(40, 48, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iw1fw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtv1u")
+}],
+"loop": true,
+"name": &"dash",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtv1u")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsd34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2umu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfdk1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2gqv")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lamj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1o86v")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_coejg"]
 particle_flag_disable_z = true
 direction = Vector3(0, 1, 0)
@@ -150,7 +238,13 @@ debug_color = Color(0.988235, 0.0980392, 0, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2iimc")
-animation = &"idle"
+animation = &"walk"
+autoplay = "idle"
+
+[node name="ShoesSprite" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_iw1fw")
+animation = &"dash"
 autoplay = "idle"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
