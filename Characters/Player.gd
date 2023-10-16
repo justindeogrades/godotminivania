@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
 
-@export var speed = 200.0
-@export var jump_velocity = -300.0
-@export var dash_velocity = 500
-@export var max_dash_frames = 30;
+@export var speed = 100.0
+@export var jump_velocity = -250.0
+@export var dash_velocity = 200
+@export var max_dash_frames = 20;
 @export var max_ghost_frames = 180;
 @export var max_ghost_cooldown_frames = 90;
 @export var death_frames_to_respawn = 120;
@@ -39,6 +39,8 @@ var player_control = true;
 var last_pos_on_floor = Vector2(0, 0);
 var floor_pos_update_frame = 0;
 
+func _ready():
+	print_debug("Player created.");
 
 func _physics_process(delta):
 	
