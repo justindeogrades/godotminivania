@@ -86,8 +86,7 @@ func _physics_process(delta):
 			dashing = true;
 			dash_ready = false;
 			dash_frame = 0;
-			default_hitbox.disabled = true;
-			dash_hitbox.disabled = false;
+			switch_to_dash_hitbox();
 			if animated_sprite.flip_h:
 				dash_velocity_multiplier = -1
 			else:
@@ -100,8 +99,7 @@ func _physics_process(delta):
 			velocity.y = 0;
 			if dash_frame > max_dash_frames:
 				dash_frame = 0;
-				default_hitbox.disabled = false;
-				dash_hitbox.disabled = true;
+				switch_to_normal_hitbox();
 				dashing = false;
 			dash_frame += 1;
 			
@@ -175,6 +173,14 @@ func emit_particle_burst(particle_vector):
 	particle_emitter.process_material.set("direction", particle_vector);
 	particle_emitter.emitting = true;
 	
+func switch_to_dash_hitbox():
+	default_hitbox.disabled = true;
+	dash_hitbox.disabled = false;
+	
+func switch_to_normal_hitbox():
+	default_hitbox.disabled = false;
+	dash_hitbox.disabled = true;
+	
 func death():
 	dead = true;
 	player_control = false;
@@ -187,6 +193,7 @@ func respawn():
 	position = spawn_point
 	death_frame = 0;
 	dead = false;
+	switch_to_normal_hitbox();
 	animated_sprite.show();
 	dashing = false;
 	ghosted = false;
