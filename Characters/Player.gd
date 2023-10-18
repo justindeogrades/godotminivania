@@ -35,12 +35,12 @@ var ghost_cooldown_frame = 0;
 var sprite_flipped = false;
 var dead = false;
 var death_frame = 0;
-var player_control = true;
+var player_control = false;
 var last_pos_on_floor = Vector2(0, 0);
 var floor_pos_update_frame = 0;
 
 func _ready():
-	print_debug("Player created.");
+	camera.position_smoothing_enabled = false;
 
 func _physics_process(delta):
 	
@@ -66,11 +66,11 @@ func _physics_process(delta):
 				last_pos_on_floor = position;
 				floor_pos_update_frame = 0;
 		
-	if player_control:
+	if player_control and not dead:
 		if Input.is_action_just_pressed("jump"):
 			if is_on_floor():
 				velocity.y = jump_velocity
-			elif  double_jump_ready:
+			elif  double_jump_ready and not dashing:
 				velocity.y = double_jump_velocity
 				emit_particle_burst(Vector3(0,1,0));
 				double_jump_ready = false
@@ -126,6 +126,7 @@ func _physics_process(delta):
 				ghost_ready = true;
 	else:
 		velocity = Vector2.ZERO;
+		pass
 	
 	update_animation()
 	move_and_slide()
@@ -157,12 +158,6 @@ func update_animation():
 			shoes_sprite.flip_h = false;
 
 func detect_hazards():
-	"""
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		if collision.get_collider().name == "Hazards":
-			death();
-	"""
 	if is_colliding_with_tile("Hazards"):
 		death();
 
@@ -206,10 +201,17 @@ func is_colliding_with_tile(tilemap_name):
 			return true;
 
 func _on_room_detector_area_entered(area):
-	var collision_shape = area.get_node("CollisionShape2D");
-	var size = collision_shape.shape.extents * 2;
-	camera.limit_top = collision_shape.global_position.y - size.y / 2;
-	camera.limit_bottom = collision_shape.global_position.y + size.y / 2;
-	camera.limit_left = collision_shape.global_position.x - size.x / 2;
-	camera.limit_right = collision_shape.global_position.x + size.x / 2;
-	
+	if not area.is_in_group("SceneWarps"):
+		var collision_shape = area.get_node("CollisionShape2D");
+		var size = collision_shape.shape.extents * 2;
+		camera.limit_top = collision_shape.global_position.y - size.y / 2;
+		camera.limit_bottom = collision_shape.global_position.y + size.y / 2;
+		camera.limit_left = collision_shape.global_position.x - size.x / 2;
+		camera.limit_right = collision_shape.global_position.x + size.x / 2;
+	else:
+		player_control = false; 
+
+
+func _on_timer_timeout():
+	player_control = true;
+	camera.position_smoothing_enabled = true;

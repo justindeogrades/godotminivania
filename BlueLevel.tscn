@@ -1,13 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgihl8jtdn8dk"]
+[gd_scene load_steps=9 format=3 uid="uid://bgihl8jtdn8dk"]
 
 [ext_resource type="TileSet" uid="uid://cu3gw87g3uvi7" path="res://Tilesets/background.tres" id="1_63jd3"]
 [ext_resource type="Script" path="res://BlueLevel.gd" id="1_tpuii"]
 [ext_resource type="TileSet" uid="uid://b1vmkb4dmwqml" path="res://Tilesets/hazards.tres" id="2_opk8n"]
 [ext_resource type="TileSet" uid="uid://5ty0ghq1d5ik" path="res://Tilesets/terrain.tres" id="3_kl454"]
+[ext_resource type="TileSet" uid="uid://b2hd3pg5ga6bb" path="res://Tilesets/ghost.tres" id="5_0yati"]
 [ext_resource type="Script" path="res://SceneWarp.gd" id="5_d64u7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pd3pp"]
-size = Vector2(188, 128)
+size = Vector2(188, 143)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sfpkf"]
 size = Vector2(20, 16)
@@ -35,13 +36,20 @@ format = 2
 layer_0/name = "Collide"
 layer_0/tile_data = PackedInt32Array(327677, 65536, 0, 327678, 65536, 0, 327679, 65536, 0, 262144, 65536, 0, 262145, 65536, 0, 262146, 65536, 0, 262147, 65536, 0, 262148, 65536, 0, 262149, 65536, 0, 262150, 65536, 0, 262151, 65536, 0, 262152, 65536, 0, 262153, 65536, 0, 262154, 65536, 0, 262155, 65536, 0, 262156, 65536, 0, 262157, 65536, 0, 262158, 65536, 0, 262159, 65536, 0, 262160, 65536, 0, 262161, 65536, 0, 262162, 65536, 0, 262163, 65536, 0, 262164, 65536, 0, 131069, 65536, 0, 65533, 65536, 0, -3, 65536, 0, -65539, 65536, 0, -131075, 65536, 0, -196611, 65536, 0, -262147, 65536, 0, -262148, 65536, 0, 327676, 65536, 0, 327675, 65536, 0, 327674, 65536, 0, 327673, 65536, 0, 327672, 65536, 0, 327671, 65536, 0, 262135, 65536, 0, 196599, 65536, 0, 131063, 65536, 0, 65527, 65536, 0, 65528, 65536, 0, 65529, 65536, 0, 65530, 65536, 0, 65531, 65536, 0, 65532, 65536, 0, -262149, 65536, 0, -262150, 65536, 0, -262151, 65536, 0, -262152, 65536, 0, -262153, 65536, 0, -327689, 65536, 0, -393225, 65536, 0, -458761, 65536, 0, -524297, 65536, 0, -524296, 65536, 0, -524295, 65536, 0, -524294, 65536, 0, -524293, 65536, 0, -524292, 65536, 0, -524291, 65536, 0, 65534, 131072, 1, 65535, 131072, 1, -131069, 131072, 1, -131068, 131072, 1, -262146, 131072, 1, -262145, 131072, 1)
 
+[node name="Ghost Tiles" type="TileMap" parent="."]
+modulate = Color(1, 1, 1, 0.384314)
+tile_set = ExtResource("5_0yati")
+cell_quadrant_size = 8
+format = 2
+layer_0/tile_data = PackedInt32Array(-262139, 65536, 0, -262138, 131072, 0, -262137, 131072, 0, -262136, 131072, 0, -262135, 131072, 0, -262134, 131072, 0, -262133, 131072, 0, -262132, 131072, 0, -262131, 196608, 0)
+
 [node name="RoomA" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoomA"]
-position = Vector2(62, 7)
+position = Vector2(62, -0.5)
 shape = SubResource("RectangleShape2D_pd3pp")
 
-[node name="SceneWarp" type="Area2D" parent="."]
+[node name="SceneWarp" type="Area2D" parent="." groups=["SceneWarps"]]
 script = ExtResource("5_d64u7")
 warp_to_pos = Vector2(366, 54)
 warp_to_scene_path = "res://RedLevel.tscn"
@@ -50,7 +58,7 @@ warp_to_scene_path = "res://RedLevel.tscn"
 position = Vector2(-52, 23)
 shape = SubResource("RectangleShape2D_sfpkf")
 
-[node name="SceneWarp2" type="Area2D" parent="."]
+[node name="SceneWarp2" type="Area2D" parent="." groups=["SceneWarps"]]
 script = ExtResource("5_d64u7")
 warp_to_pos = Vector2(366, -18)
 warp_to_scene_path = "res://RedLevel.tscn"

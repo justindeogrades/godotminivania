@@ -7,6 +7,7 @@ func _ready():
 	player = load(player_scene_path).instantiate();
 	add_child(player);
 	player.position = Global.warp_pos;
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
