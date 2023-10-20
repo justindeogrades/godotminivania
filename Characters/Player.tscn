@@ -278,6 +278,7 @@ drag_bottom_margin = 0.1
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
+one_shot = true
 autostart = true
 
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]

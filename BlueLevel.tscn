@@ -11,7 +11,7 @@
 size = Vector2(188, 143)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sfpkf"]
-size = Vector2(20, 16)
+size = Vector2(20, 22)
 
 [node name="BlueLevel" type="Node2D"]
 script = ExtResource("1_tpuii")
@@ -55,7 +55,7 @@ warp_to_pos = Vector2(366, 54)
 warp_to_scene_path = "res://RedLevel.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneWarp"]
-position = Vector2(-52, 23)
+position = Vector2(-53, 20)
 shape = SubResource("RectangleShape2D_sfpkf")
 
 [node name="SceneWarp2" type="Area2D" parent="." groups=["SceneWarps"]]
@@ -64,7 +64,7 @@ warp_to_pos = Vector2(366, -18)
 warp_to_scene_path = "res://RedLevel.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneWarp2"]
-position = Vector2(-53, -49)
+position = Vector2(-53, -52)
 shape = SubResource("RectangleShape2D_sfpkf")
 
 [connection signal="body_entered" from="SceneWarp" to="SceneWarp" method="_on_body_entered"]

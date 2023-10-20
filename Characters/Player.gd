@@ -35,7 +35,7 @@ var ghost_cooldown_frame = 0;
 var sprite_flipped = false;
 var dead = false;
 var death_frame = 0;
-var player_control = false;
+var player_control = true;
 var last_pos_on_floor = Vector2(0, 0);
 var floor_pos_update_frame = 0;
 
@@ -124,7 +124,7 @@ func _physics_process(delta):
 			else:
 				ghost_cooldown_frame = 0;
 				ghost_ready = true;
-	else:
+	elif dead:
 		velocity = Vector2.ZERO;
 		pass
 	
@@ -213,5 +213,5 @@ func _on_room_detector_area_entered(area):
 
 
 func _on_timer_timeout():
-	player_control = true;
+	#player_control = true;
 	camera.position_smoothing_enabled = true;

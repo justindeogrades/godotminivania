@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://yseageb7nbnb"]
+
+[ext_resource type="Script" path="res://MainMenu.gd" id="1_u65u7"]
+[ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="2_q8kft"]
+[ext_resource type="FontFile" uid="uid://ephbiex5al8b" path="res://Fonts/disposabledroid-bb.bold.ttf" id="3_a4hys"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_uv2ld"]
+font = ExtResource("2_q8kft")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_hoqep"]
+font = ExtResource("2_q8kft")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_qf6px"]
+font = ExtResource("2_q8kft")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ekr4"]
+font = ExtResource("3_a4hys")
+
+[node name="Menus" type="CanvasLayer"]
+
+[node name="MainMenu" type="VBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -41.0
+offset_right = 25.0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_u65u7")
+
+[node name="Play" type="Label" parent="MainMenu"]
+clip_contents = true
+layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Options")
+focus_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Play"
+label_settings = SubResource("LabelSettings_uv2ld")
+
+[node name="Options" type="Label" parent="MainMenu"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Play")
+focus_neighbor_bottom = NodePath("../Quit")
+focus_mode = 2
+text = "Options"
+label_settings = SubResource("LabelSettings_hoqep")
+
+[node name="Quit" type="Label" parent="MainMenu"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Options")
+focus_neighbor_bottom = NodePath("../Play")
+focus_mode = 2
+text = "Quit"
+label_settings = SubResource("LabelSettings_qf6px")
+
+[node name="Title" type="Label" parent="."]
+offset_right = 28.0
+offset_bottom = 19.0
+text = "Title"
+label_settings = SubResource("LabelSettings_5ekr4")
+
+[connection signal="focus_entered" from="MainMenu/Play" to="MainMenu" method="_on_play_focus_entered"]
+[connection signal="focus_exited" from="MainMenu/Play" to="MainMenu" method="_on_play_focus_exited"]
+[connection signal="gui_input" from="MainMenu/Play" to="MainMenu" method="_on_play_gui_input"]
+[connection signal="focus_entered" from="MainMenu/Options" to="MainMenu" method="_on_options_focus_entered"]
+[connection signal="focus_exited" from="MainMenu/Options" to="MainMenu" method="_on_options_focus_exited"]
+[connection signal="focus_entered" from="MainMenu/Quit" to="MainMenu" method="_on_quit_focus_entered"]
+[connection signal="focus_exited" from="MainMenu/Quit" to="MainMenu" method="_on_quit_focus_exited"]
