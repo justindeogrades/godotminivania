@@ -7,6 +7,8 @@
 [sub_resource type="LabelSettings" id="LabelSettings_uv2ld"]
 font = ExtResource("2_q8kft")
 font_size = 8
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_hoqep"]
 font = ExtResource("2_q8kft")
@@ -71,3 +73,4 @@ label_settings = SubResource("LabelSettings_5ekr4")
 [connection signal="focus_exited" from="MainMenu/Options" to="MainMenu" method="_on_options_focus_exited"]
 [connection signal="focus_entered" from="MainMenu/Quit" to="MainMenu" method="_on_quit_focus_entered"]
 [connection signal="focus_exited" from="MainMenu/Quit" to="MainMenu" method="_on_quit_focus_exited"]
+[connection signal="gui_input" from="MainMenu/Quit" to="MainMenu" method="_on_quit_gui_input"]

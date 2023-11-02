@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var dash_velocity = 200
 @export var max_dash_frames = 20;
 @export var max_ghost_frames = 180;
+@export var max_powerup_frames = 300;
 @export var max_ghost_cooldown_frames = 90;
 @export var death_frames_to_respawn = 120;
 @export var floor_pos_update_frames_interval = 10;
@@ -16,6 +17,9 @@ extends CharacterBody2D
 @onready var camera : Camera2D = $Camera2D;
 @onready var default_hitbox : CollisionShape2D = $DefaultHitbox;
 @onready var dash_hitbox : CollisionShape2D = $DashHitbox;
+@onready var ability_tooltip : Label = $AbilityTooltip;
+@onready var tooltip_timer : Timer = $TooltipTimer;
+
 var double_jump_velocity = jump_velocity * 0.66
 var spawn_point = Vector2(0, 0);
 
@@ -32,6 +36,8 @@ var ghosted = false;
 var ghost_ready = true;
 var ghost_frame = 0;
 var ghost_cooldown_frame = 0;
+var powering_up = false;
+var powerup_frame = 0;
 var sprite_flipped = false;
 var dead = false;
 var death_frame = 0;
@@ -41,6 +47,8 @@ var floor_pos_update_frame = 0;
 
 func _ready():
 	camera.position_smoothing_enabled = false;
+	direction.x = Global.warp_dir;
+	update_animation();
 
 func _physics_process(delta):
 	
@@ -70,7 +78,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("jump"):
 			if is_on_floor():
 				velocity.y = jump_velocity
-			elif  double_jump_ready and not dashing:
+			elif  Global.ability_unlocked[Global.ability.DOUBLEJUMP] and double_jump_ready and not dashing:
 				velocity.y = double_jump_velocity
 				emit_particle_burst(Vector3(0,1,0));
 				double_jump_ready = false
@@ -82,7 +90,7 @@ func _physics_process(delta):
 			velocity.x = move_toward(velocity.x, 0, speed)
 		
 			
-		if Input.is_action_just_pressed("dash") && dash_ready:
+		if Input.is_action_just_pressed("dash") and Global.ability_unlocked[Global.ability.DASH] and dash_ready:
 			dashing = true;
 			dash_ready = false;
 			dash_frame = 0;
@@ -103,7 +111,7 @@ func _physics_process(delta):
 				dashing = false;
 			dash_frame += 1;
 			
-		if Input.is_action_just_pressed("down") && ghost_ready:
+		if Input.is_action_just_pressed("down") and Global.ability_unlocked[Global.ability.GHOST] and ghost_ready:
 			ghosted = true;
 			ghost_ready = false;
 			shoes_sprite.show();
@@ -127,6 +135,11 @@ func _physics_process(delta):
 	elif dead:
 		velocity = Vector2.ZERO;
 		pass
+	elif powering_up:
+		velocity = Vector2(0,-1);
+		if(powerup_frame >= max_powerup_frames):
+			exit_powerup_state();
+		powerup_frame += 1;
 	
 	update_animation()
 	move_and_slide()
@@ -135,6 +148,8 @@ func update_animation():
 	if dashing:
 		animated_sprite.play("dash");
 		shoes_sprite.play("dash")
+	elif powering_up:
+		animated_sprite.play("powerup");
 	else:
 		if is_on_floor():
 			if direction.x != 0:
@@ -194,6 +209,20 @@ func respawn():
 	ghosted = false;
 	player_control = true;
 
+func enter_powerup_state():
+	player_control = false;
+	dashing = false;
+	ghosted = false;
+	direction.x = 0;
+	powering_up = true;
+
+func exit_powerup_state():
+	powerup_frame = 0;
+	player_control = true;
+	powering_up = false;
+	ability_tooltip.visible = true;
+	tooltip_timer.start();
+
 func is_colliding_with_tile(tilemap_name):
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
@@ -201,17 +230,30 @@ func is_colliding_with_tile(tilemap_name):
 			return true;
 
 func _on_room_detector_area_entered(area):
-	if not area.is_in_group("SceneWarps"):
+	if  area.is_in_group("Rooms"):
 		var collision_shape = area.get_node("CollisionShape2D");
 		var size = collision_shape.shape.extents * 2;
 		camera.limit_top = collision_shape.global_position.y - size.y / 2;
 		camera.limit_bottom = collision_shape.global_position.y + size.y / 2;
 		camera.limit_left = collision_shape.global_position.x - size.x / 2;
 		camera.limit_right = collision_shape.global_position.x + size.x / 2;
-	else:
+	elif area.is_in_group("SceneWarps"):
 		player_control = false; 
+	
+	if area.is_in_group("Powerups"):
+		enter_powerup_state();
+		if area.ability_to_unlock == Global.ability.DOUBLEJUMP:
+			ability_tooltip.text = "Space again midair to double jump";
+		elif area.ability_to_unlock == Global.ability.DASH:
+			ability_tooltip.text = "Shift to dash";
+		elif area.ability_to_unlock == Global.ability.GHOST:
+			ability_tooltip.text = "S to collide with ghost tiles";
 
 
 func _on_timer_timeout():
 	#player_control = true;
 	camera.position_smoothing_enabled = true;
+
+
+func _on_tooltip_timer_timeout():
+	ability_tooltip.visible = false;

@@ -1,8 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://bmrxvp84pylld"]
+[gd_scene load_steps=36 format=3 uid="uid://bmrxvp84pylld"]
 
 [ext_resource type="Texture2D" uid="uid://c4qr2aycapvsd" path="res://Sprites/pete sheet.png" id="1_q87dr"]
 [ext_resource type="Script" path="res://Characters/Player.gd" id="1_s8srl"]
 [ext_resource type="Texture2D" uid="uid://kcpqjqdpton2" path="res://Sprites/shoes sheet.png" id="3_plovu"]
+[ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="4_f1jkd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfnl8"]
 size = Vector2(4, 8)
@@ -10,21 +11,21 @@ size = Vector2(4, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m74n4"]
 size = Vector2(4, 3)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8l1l1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ef3j8"]
 atlas = ExtResource("1_q87dr")
-region = Rect2(8, 144, 8, 8)
+region = Rect2(7, 144, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3resg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ba5k7"]
 atlas = ExtResource("1_q87dr")
-region = Rect2(40, 144, 8, 8)
+region = Rect2(39, 144, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nvbxa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmu0y"]
 atlas = ExtResource("1_q87dr")
-region = Rect2(72, 144, 8, 8)
+region = Rect2(71, 144, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gehgg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qf3bk"]
 atlas = ExtResource("1_q87dr")
-region = Rect2(104, 144, 8, 8)
+region = Rect2(103, 144, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7bdwt"]
 atlas = ExtResource("1_q87dr")
@@ -50,6 +51,22 @@ region = Rect2(104, 16, 8, 8)
 atlas = ExtResource("1_q87dr")
 region = Rect2(8, 80, 8, 8)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyki6"]
+atlas = ExtResource("1_q87dr")
+region = Rect2(8, 176, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0j6f2"]
+atlas = ExtResource("1_q87dr")
+region = Rect2(40, 176, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7maba"]
+atlas = ExtResource("1_q87dr")
+region = Rect2(72, 176, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shuvo"]
+atlas = ExtResource("1_q87dr")
+region = Rect2(104, 176, 8, 8)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_j4c7w"]
 atlas = ExtResource("1_q87dr")
 region = Rect2(8, 48, 8, 8)
@@ -62,16 +79,16 @@ region = Rect2(40, 48, 8, 8)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8l1l1")
+"texture": SubResource("AtlasTexture_ef3j8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3resg")
+"texture": SubResource("AtlasTexture_ba5k7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nvbxa")
+"texture": SubResource("AtlasTexture_gmu0y")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gehgg")
+"texture": SubResource("AtlasTexture_qf3bk")
 }],
 "loop": true,
 "name": &"dash",
@@ -109,6 +126,23 @@ animations = [{
 "loop": true,
 "name": &"jump",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uyki6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0j6f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7maba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shuvo")
+}],
+"loop": true,
+"name": &"powerup",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -221,6 +255,11 @@ orbit_velocity_max = 0.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ht2dl"]
 size = Vector2(4, 8)
 
+[sub_resource type="LabelSettings" id="LabelSettings_fdwht"]
+line_spacing = 1.0
+font = ExtResource("4_f1jkd")
+font_size = 6
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 slide_on_ceiling = false
 safe_margin = 0.001
@@ -238,8 +277,9 @@ debug_color = Color(0.988235, 0.0980392, 0, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2iimc")
-animation = &"walk"
+animation = &"powerup"
 autoplay = "idle"
+frame_progress = 0.171789
 
 [node name="ShoesSprite" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -256,7 +296,7 @@ one_shot = true
 explosiveness = 0.9
 randomness = 1.0
 
-[node name="RoomDetector" type="Area2D" parent="."]
+[node name="RoomDetector" type="Area2D" parent="." groups=["RoomDetector"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoomDetector"]
 shape = SubResource("RectangleShape2D_ht2dl")
@@ -281,5 +321,21 @@ wait_time = 0.1
 one_shot = true
 autostart = true
 
+[node name="AbilityTooltip" type="Label" parent="."]
+visible = false
+offset_left = -14.0
+offset_top = -26.0
+offset_right = 14.0
+text = "Test"
+label_settings = SubResource("LabelSettings_fdwht")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="TooltipTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="TooltipTimer" to="." method="_on_tooltip_timer_timeout"]

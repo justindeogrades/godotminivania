@@ -8,7 +8,6 @@ func _ready():
 	player = load(player_scene_path).instantiate();
 	add_child(player);
 	player.position = Global.warp_pos;
-	player.direction.x = Global.warp_dir;
 	if not Global.main_menu_created:
 		var menu = load(menu_scene_path).instantiate();
 		add_child(menu);

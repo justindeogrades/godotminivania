@@ -44,3 +44,7 @@ func _on_quit_focus_entered():
 
 func _on_quit_focus_exited():
 	$Quit.label_settings.font_color = default_colour;
+
+func _on_quit_gui_input(event):
+	if Input.is_action_just_pressed("ui_accept"):
+		get_tree().quit();

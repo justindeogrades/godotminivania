@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2ipayab6acru"]
+[gd_scene load_steps=11 format=3 uid="uid://b2ipayab6acru"]
 
 [ext_resource type="TileSet" uid="uid://cu3gw87g3uvi7" path="res://Tilesets/background.tres" id="1_e4prb"]
 [ext_resource type="Script" path="res://RedLevel.gd" id="1_mvw30"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://5ty0ghq1d5ik" path="res://Tilesets/terrain.tres" id="3_ste4q"]
 [ext_resource type="TileSet" uid="uid://b2hd3pg5ga6bb" path="res://Tilesets/ghost.tres" id="4_f07mf"]
 [ext_resource type="Script" path="res://SceneWarp.gd" id="6_kus0f"]
+[ext_resource type="PackedScene" uid="uid://dbjlbtwxu461" path="res://powerup.tscn" id="7_5ve3a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k85km"]
 size = Vector2(188, 128)
@@ -44,13 +45,13 @@ cell_quadrant_size = 8
 format = 2
 layer_0/tile_data = PackedInt32Array(-262139, 65536, 0, -262138, 131072, 0, -262137, 131072, 0, -262136, 131072, 0, -262135, 131072, 0, -262134, 131072, 0, -262133, 131072, 0, -262132, 131072, 0, -262131, 196608, 0, 43, 65536, 1, 65579, 65536, 2, 131115, 65536, 2, 196651, 65536, 2, 262187, 65536, 2, 327723, 65536, 2, 393259, 65536, 2, 458795, 65536, 3)
 
-[node name="RoomA" type="Area2D" parent="."]
+[node name="RoomA" type="Area2D" parent="." groups=["Rooms"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoomA"]
 position = Vector2(62, 7)
 shape = SubResource("RectangleShape2D_k85km")
 
-[node name="RoomB" type="Area2D" parent="."]
+[node name="RoomB" type="Area2D" parent="." groups=["Rooms"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoomB"]
 position = Vector2(263.5, 7)
@@ -73,6 +74,17 @@ warp_to_scene_path = "res://BlueLevel.tscn"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneWarp2"]
 position = Vector2(382, -17)
 shape = SubResource("RectangleShape2D_bfn6u")
+
+[node name="DoubleJump" parent="." instance=ExtResource("7_5ve3a")]
+position = Vector2(143, 27)
+
+[node name="Dash" parent="." instance=ExtResource("7_5ve3a")]
+position = Vector2(201, 60)
+ability_to_unlock = 1
+
+[node name="Ghost" parent="." instance=ExtResource("7_5ve3a")]
+position = Vector2(292, 4)
+ability_to_unlock = 2
 
 [connection signal="body_entered" from="SceneWarp" to="SceneWarp" method="_on_body_entered"]
 [connection signal="body_entered" from="SceneWarp2" to="SceneWarp2" method="_on_body_entered"]

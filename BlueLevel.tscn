@@ -43,7 +43,7 @@ cell_quadrant_size = 8
 format = 2
 layer_0/tile_data = PackedInt32Array(-262139, 65536, 0, -262138, 131072, 0, -262137, 131072, 0, -262136, 131072, 0, -262135, 131072, 0, -262134, 131072, 0, -262133, 131072, 0, -262132, 131072, 0, -262131, 196608, 0)
 
-[node name="RoomA" type="Area2D" parent="."]
+[node name="RoomA" type="Area2D" parent="." groups=["Rooms"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoomA"]
 position = Vector2(62, -0.5)

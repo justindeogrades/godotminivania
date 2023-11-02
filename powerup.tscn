@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbjlbtwxu461"]
+
+[ext_resource type="Script" path="res://powerup.gd" id="1_w1pyu"]
+[ext_resource type="Texture2D" uid="uid://j37vyqdl2b7u" path="res://Sprites/powerup.png" id="2_gtt0o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0neje"]
+size = Vector2(6, 7)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xaqwy"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lvann"]
+emission_shape = 1
+emission_sphere_radius = 8.0
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4il3"]
+atlas = ExtResource("2_gtt0o")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jq6xs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4il3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Area2D" type="Area2D" groups=["Powerups"]]
+script = ExtResource("1_w1pyu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_0neje")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_xaqwy")
+process_material = SubResource("ParticleProcessMaterial_lvann")
+lifetime = 0.5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jq6xs")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
