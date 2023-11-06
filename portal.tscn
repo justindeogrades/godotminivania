@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://b31e22mx2asir"]
+
+[ext_resource type="Script" path="res://Node2D.gd" id="1_s2yfa"]
+[ext_resource type="Texture2D" uid="uid://bovtfxyd3ylos" path="res://Sprites/portal ring.png" id="2_2ak0s"]
+[ext_resource type="Texture2D" uid="uid://b0xsbeum5iv38" path="res://Sprites/portal path.png" id="3_d2qm7"]
+[ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="4_asq5y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5wpb"]
+size = Vector2(40, 34)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3fjjf"]
+font = ExtResource("4_asq5y")
+font_size = 8
+
+[node name="Portal" type="Node2D"]
+script = ExtResource("1_s2yfa")
+
+[node name="Ring" type="Sprite2D" parent="."]
+texture = ExtResource("2_2ak0s")
+
+[node name="Path" type="Sprite2D" parent="."]
+texture = ExtResource("3_d2qm7")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_k5wpb")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -33.0
+offset_top = -39.0
+offset_right = 33.0
+offset_bottom = -16.0
+text = "Collect 8 more orbs"
+label_settings = SubResource("LabelSettings_3fjjf")
+horizontal_alignment = 1
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

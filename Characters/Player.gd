@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var dash_velocity = 200
 @export var max_dash_frames = 20;
 @export var max_ghost_frames = 180;
-@export var max_powerup_frames = 300;
+@export var max_powerup_frames = 30;
 @export var max_ghost_cooldown_frames = 90;
 @export var death_frames_to_respawn = 120;
 @export var floor_pos_update_frames_interval = 10;

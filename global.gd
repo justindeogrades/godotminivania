@@ -11,6 +11,7 @@ var warp_scene_path = " ";
 var warp_dir = 0;
 var main_menu_created = false;
 var ability_unlocked = [false, false, false];
+var orbs_collected = 6;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
