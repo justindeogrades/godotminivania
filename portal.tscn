@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://b31e22mx2asir"]
 
-[ext_resource type="Script" path="res://Node2D.gd" id="1_s2yfa"]
+[ext_resource type="Script" path="res://Portal.gd" id="1_qh33u"]
 [ext_resource type="Texture2D" uid="uid://bovtfxyd3ylos" path="res://Sprites/portal ring.png" id="2_2ak0s"]
 [ext_resource type="Texture2D" uid="uid://b0xsbeum5iv38" path="res://Sprites/portal path.png" id="3_d2qm7"]
 [ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="4_asq5y"]
@@ -13,7 +13,7 @@ font = ExtResource("4_asq5y")
 font_size = 8
 
 [node name="Portal" type="Node2D"]
-script = ExtResource("1_s2yfa")
+script = ExtResource("1_qh33u")
 
 [node name="Ring" type="Sprite2D" parent="."]
 texture = ExtResource("2_2ak0s")

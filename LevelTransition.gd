@@ -17,6 +17,7 @@ func _process(delta):
 	pass
 
 func begin_scene_transition(_scene_transitioning_to):
+	print_debug("Scene transition initiated")
 	scene_transitioning_to = _scene_transitioning_to;
 	fade_to_black();
 

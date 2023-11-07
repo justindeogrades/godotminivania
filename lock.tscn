@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bkjt8frwh31b2"]
 
 [ext_resource type="Texture2D" uid="uid://hc71682rqs1y" path="res://Sprites/lock sheet.png" id="1_he7dp"]
-[ext_resource type="Script" path="res://Sprite2D.gd" id="2_6cajs"]
+[ext_resource type="Script" path="res://Lock.gd" id="2_8fj0n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tev4q"]
 atlas = ExtResource("1_he7dp")
@@ -39,7 +39,7 @@ orbit_velocity_max = 0.0
 sprite_frames = SubResource("SpriteFrames_apjd8")
 frame_progress = 0.251503
 speed_scale = 0.0
-script = ExtResource("2_6cajs")
+script = ExtResource("2_8fj0n")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false

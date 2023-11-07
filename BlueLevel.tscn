@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgihl8jtdn8dk"]
+[gd_scene load_steps=10 format=3 uid="uid://bgihl8jtdn8dk"]
 
 [ext_resource type="TileSet" uid="uid://cu3gw87g3uvi7" path="res://Tilesets/background.tres" id="1_63jd3"]
 [ext_resource type="Script" path="res://BlueLevel.gd" id="1_tpuii"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://5ty0ghq1d5ik" path="res://Tilesets/terrain.tres" id="3_kl454"]
 [ext_resource type="TileSet" uid="uid://b2hd3pg5ga6bb" path="res://Tilesets/ghost.tres" id="5_0yati"]
 [ext_resource type="Script" path="res://SceneWarp.gd" id="5_d64u7"]
+[ext_resource type="PackedScene" uid="uid://tcdirb8h1q6w" path="res://orb.tscn" id="7_g317d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pd3pp"]
 size = Vector2(188, 143)
@@ -66,6 +67,13 @@ warp_to_scene_path = "res://RedLevel.tscn"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneWarp2"]
 position = Vector2(-53, -52)
 shape = SubResource("RectangleShape2D_sfpkf")
+
+[node name="Orb" parent="." instance=ExtResource("7_g317d")]
+position = Vector2(20, 29)
+
+[node name="Orb2" parent="." instance=ExtResource("7_g317d")]
+position = Vector2(30, 29)
+orb_id = 1
 
 [connection signal="body_entered" from="SceneWarp" to="SceneWarp" method="_on_body_entered"]
 [connection signal="body_entered" from="SceneWarp2" to="SceneWarp2" method="_on_body_entered"]

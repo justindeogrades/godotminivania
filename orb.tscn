@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://tcdirb8h1q6w"]
+
+[ext_resource type="Script" path="res://Orb.gd" id="1_23otj"]
+[ext_resource type="Texture2D" uid="uid://chs5v8ro6m35f" path="res://Sprites/orb.png" id="2_256h2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqvik"]
+size = Vector2(4, 4)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j155g"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j8dg1"]
+emission_shape = 1
+emission_sphere_radius = 8.0
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.1
+
+[node name="Orb" type="Area2D"]
+script = ExtResource("1_23otj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bqvik")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_j155g")
+process_material = SubResource("ParticleProcessMaterial_j8dg1")
+lifetime = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(12, 12)
+texture = ExtResource("2_256h2")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
