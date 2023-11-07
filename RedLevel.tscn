@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2ipayab6acru"]
+[gd_scene load_steps=13 format=3 uid="uid://b2ipayab6acru"]
 
 [ext_resource type="TileSet" uid="uid://cu3gw87g3uvi7" path="res://Tilesets/background.tres" id="1_e4prb"]
 [ext_resource type="Script" path="res://RedLevel.gd" id="1_mvw30"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://SceneWarp.gd" id="6_kus0f"]
 [ext_resource type="PackedScene" uid="uid://dbjlbtwxu461" path="res://powerup.tscn" id="7_5ve3a"]
 [ext_resource type="PackedScene" uid="uid://b31e22mx2asir" path="res://portal.tscn" id="8_4ifu0"]
+[ext_resource type="PackedScene" uid="uid://tcdirb8h1q6w" path="res://orb.tscn" id="9_5uk1q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k85km"]
 size = Vector2(188, 128)
@@ -89,6 +90,30 @@ ability_to_unlock = 2
 
 [node name="Portal" parent="." instance=ExtResource("8_4ifu0")]
 position = Vector2(229, 40)
+
+[node name="Orb" parent="." instance=ExtResource("9_5uk1q")]
+position = Vector2(304, 60)
+orb_id = 2
+
+[node name="Orb2" parent="." instance=ExtResource("9_5uk1q")]
+position = Vector2(309, 60)
+orb_id = 3
+
+[node name="Orb3" parent="." instance=ExtResource("9_5uk1q")]
+position = Vector2(314, 60)
+orb_id = 4
+
+[node name="Orb4" parent="." instance=ExtResource("9_5uk1q")]
+position = Vector2(319, 60)
+orb_id = 5
+
+[node name="Orb5" parent="." instance=ExtResource("9_5uk1q")]
+position = Vector2(324, 60)
+orb_id = 6
+
+[node name="Orb6" parent="." instance=ExtResource("9_5uk1q")]
+position = Vector2(329, 60)
+orb_id = 7
 
 [connection signal="body_entered" from="SceneWarp" to="SceneWarp" method="_on_body_entered"]
 [connection signal="body_entered" from="SceneWarp2" to="SceneWarp2" method="_on_body_entered"]
