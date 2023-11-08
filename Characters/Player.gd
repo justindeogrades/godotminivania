@@ -17,7 +17,7 @@ extends CharacterBody2D
 @onready var camera : Camera2D = $Camera2D;
 @onready var default_hitbox : CollisionShape2D = $DefaultHitbox;
 @onready var dash_hitbox : CollisionShape2D = $DashHitbox;
-@onready var ability_tooltip : Label = $AbilityTooltip;
+@onready var gui : CanvasLayer = $Gui
 @onready var tooltip_timer : Timer = $TooltipTimer;
 
 var double_jump_velocity = jump_velocity * 0.66
@@ -45,12 +45,17 @@ var player_control = true;
 var last_pos_on_floor = Vector2(0, 0);
 var floor_pos_update_frame = 0;
 
+@onready var ability_tooltip = get_node("Gui").get_node("AbilityTooltip");
+@onready var orb_count = get_node("Gui").get_node("OrbCount");
+
 func _ready():
 	camera.position_smoothing_enabled = false;
 	direction.x = Global.warp_dir;
 	update_animation();
 
 func _physics_process(delta):
+	
+	orb_count.text = "x" + str(Global.orbs_collected);
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -251,7 +256,7 @@ func _on_room_detector_area_entered(area):
 
 
 func _on_timer_timeout():
-	#player_control = true;
+	player_control = true;
 	camera.position_smoothing_enabled = true;
 
 

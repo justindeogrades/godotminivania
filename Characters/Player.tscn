@@ -1,9 +1,11 @@
-[gd_scene load_steps=36 format=3 uid="uid://bmrxvp84pylld"]
+[gd_scene load_steps=39 format=3 uid="uid://bmrxvp84pylld"]
 
 [ext_resource type="Texture2D" uid="uid://c4qr2aycapvsd" path="res://Sprites/pete sheet.png" id="1_q87dr"]
 [ext_resource type="Script" path="res://Characters/Player.gd" id="1_s8srl"]
 [ext_resource type="Texture2D" uid="uid://kcpqjqdpton2" path="res://Sprites/shoes sheet.png" id="3_plovu"]
 [ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="4_f1jkd"]
+[ext_resource type="FontFile" uid="uid://ephbiex5al8b" path="res://Fonts/disposabledroid-bb.bold.ttf" id="5_j1tga"]
+[ext_resource type="Texture2D" uid="uid://chs5v8ro6m35f" path="res://Sprites/orb.png" id="6_wigh0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfnl8"]
 size = Vector2(4, 8)
@@ -260,6 +262,9 @@ line_spacing = 1.0
 font = ExtResource("4_f1jkd")
 font_size = 6
 
+[sub_resource type="LabelSettings" id="LabelSettings_s8usa"]
+font = ExtResource("5_j1tga")
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 slide_on_ceiling = false
 safe_margin = 0.001
@@ -321,20 +326,34 @@ wait_time = 0.1
 one_shot = true
 autostart = true
 
-[node name="AbilityTooltip" type="Label" parent="."]
-visible = false
-offset_left = -14.0
-offset_top = -26.0
-offset_right = 14.0
-text = "Test"
-label_settings = SubResource("LabelSettings_fdwht")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
 [node name="TooltipTimer" type="Timer" parent="."]
 wait_time = 4.0
 one_shot = true
+
+[node name="Gui" type="CanvasLayer" parent="."]
+
+[node name="AbilityTooltip" type="Label" parent="Gui"]
+visible = false
+offset_top = 76.0
+offset_right = 160.0
+offset_bottom = 90.0
+text = "Test"
+label_settings = SubResource("LabelSettings_fdwht")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="OrbCount" type="Label" parent="Gui"]
+offset_left = 120.0
+offset_right = 158.0
+offset_bottom = 23.0
+text = "x0"
+label_settings = SubResource("LabelSettings_s8usa")
+horizontal_alignment = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Gui/OrbCount"]
+position = Vector2(39, 31)
+scale = Vector2(2, 2)
+texture = ExtResource("6_wigh0")
 
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

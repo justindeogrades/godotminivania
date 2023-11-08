@@ -6,7 +6,7 @@ enum ability {
 	GHOST
 }
 
-var warp_pos = Vector2.ZERO;
+var warp_pos = Vector2(0,0);
 var warp_scene_path = " ";
 var warp_dir = 0;
 var main_menu_created = false;
