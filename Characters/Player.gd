@@ -17,6 +17,7 @@ extends CharacterBody2D
 @onready var camera : Camera2D = $Camera2D;
 @onready var default_hitbox : CollisionShape2D = $DefaultHitbox;
 @onready var dash_hitbox : CollisionShape2D = $DashHitbox;
+@onready var animation_player : AnimationPlayer = $AnimationPlayer;
 @onready var gui : CanvasLayer = $Gui
 @onready var tooltip_timer : Timer = $TooltipTimer;
 
@@ -38,12 +39,19 @@ var ghost_frame = 0;
 var ghost_cooldown_frame = 0;
 var powering_up = false;
 var powerup_frame = 0;
+var portalling = false;
 var sprite_flipped = false;
 var dead = false;
 var death_frame = 0;
 var player_control = true;
 var last_pos_on_floor = Vector2(0, 0);
 var floor_pos_update_frame = 0;
+var is_in_portal_range = false;
+var portal_pos = Vector2.ZERO;
+var portal_velocity = Vector2.ZERO;
+var portal_velocity_multiplier = 0.25;
+var portal_frames_max = 200;
+var portal_frame_at = 0;
 
 @onready var ability_tooltip = get_node("Gui").get_node("AbilityTooltip");
 @onready var orb_count = get_node("Gui").get_node("OrbCount");
@@ -51,6 +59,7 @@ var floor_pos_update_frame = 0;
 func _ready():
 	camera.position_smoothing_enabled = false;
 	direction.x = Global.warp_dir;
+	rotation_degrees = 0;
 	update_animation();
 
 func _physics_process(delta):
@@ -137,6 +146,10 @@ func _physics_process(delta):
 			else:
 				ghost_cooldown_frame = 0;
 				ghost_ready = true;
+		
+		if Input.is_action_just_pressed("up") and is_in_portal_range and Global.portal_active:
+			animation_player.play("enter_portal");
+			enter_portal_state();
 	elif dead:
 		velocity = Vector2.ZERO;
 		pass
@@ -145,6 +158,15 @@ func _physics_process(delta):
 		if(powerup_frame >= max_powerup_frames):
 			exit_powerup_state();
 		powerup_frame += 1;
+	elif portalling:
+		if portal_frame_at < portal_frames_max:
+			velocity = portal_velocity;
+			scale -= Vector2(0.005, 0.005);
+			portal_frame_at += 1;
+		else:
+			velocity = Vector2.ZERO;
+			visible = false;
+			get_tree().quit();
 	
 	update_animation()
 	move_and_slide()
@@ -154,6 +176,8 @@ func update_animation():
 		animated_sprite.play("dash");
 		shoes_sprite.play("dash")
 	elif powering_up:
+		animated_sprite.play("powerup");
+	elif portalling:
 		animated_sprite.play("powerup");
 	else:
 		if is_on_floor():
@@ -228,6 +252,14 @@ func exit_powerup_state():
 	ability_tooltip.visible = true;
 	tooltip_timer.start();
 
+func enter_portal_state():
+	player_control = false;
+	dashing = false;
+	ghosted = false;
+	portal_velocity.x = (portal_pos.x - position.x) * portal_velocity_multiplier;
+	portal_velocity.y = (portal_pos.y - position.y) * portal_velocity_multiplier;
+	portalling = true;
+
 func is_colliding_with_tile(tilemap_name):
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
@@ -243,7 +275,8 @@ func _on_room_detector_area_entered(area):
 		camera.limit_left = collision_shape.global_position.x - size.x / 2;
 		camera.limit_right = collision_shape.global_position.x + size.x / 2;
 	elif area.is_in_group("SceneWarps"):
-		player_control = false; 
+		player_control = false;
+		gui.visible = false;
 	
 	if area.is_in_group("Powerups"):
 		enter_powerup_state();
@@ -253,10 +286,14 @@ func _on_room_detector_area_entered(area):
 			ability_tooltip.text = "Shift to dash";
 		elif area.ability_to_unlock == Global.ability.GHOST:
 			ability_tooltip.text = "S to collide with ghost tiles";
+	
+	if area.is_in_group("Portal"):
+		is_in_portal_range = true;
+		portal_pos = area.get_parent().position;
 
 
 func _on_timer_timeout():
-	player_control = true;
+	#player_control = true;
 	camera.position_smoothing_enabled = true;
 
 

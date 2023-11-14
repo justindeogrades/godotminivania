@@ -1,10 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://bmrxvp84pylld"]
+[gd_scene load_steps=41 format=3 uid="uid://bmrxvp84pylld"]
 
 [ext_resource type="Texture2D" uid="uid://c4qr2aycapvsd" path="res://Sprites/pete sheet.png" id="1_q87dr"]
 [ext_resource type="Script" path="res://Characters/Player.gd" id="1_s8srl"]
 [ext_resource type="Texture2D" uid="uid://kcpqjqdpton2" path="res://Sprites/shoes sheet.png" id="3_plovu"]
-[ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="4_f1jkd"]
-[ext_resource type="FontFile" uid="uid://ephbiex5al8b" path="res://Fonts/disposabledroid-bb.bold.ttf" id="5_j1tga"]
+[ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="4_6bi5o"]
 [ext_resource type="Texture2D" uid="uid://chs5v8ro6m35f" path="res://Sprites/orb.png" id="6_wigh0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfnl8"]
@@ -259,13 +258,90 @@ size = Vector2(4, 8)
 
 [sub_resource type="LabelSettings" id="LabelSettings_fdwht"]
 line_spacing = 1.0
-font = ExtResource("4_f1jkd")
-font_size = 6
+font = ExtResource("4_6bi5o")
+font_size = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_s8usa"]
-font = ExtResource("5_j1tga")
+font = ExtResource("4_6bi5o")
+font_size = 12
+
+[sub_resource type="Animation" id="Animation_0ot4a"]
+resource_name = "enter_portal"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"powerup"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 3.14159, 6.28319]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"powerup", 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_w8hvd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.14159]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gp1b7"]
+_data = {
+"RESET": SubResource("Animation_w8hvd"),
+"enter_portal": SubResource("Animation_0ot4a")
+}
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+rotation = 3.14159
 slide_on_ceiling = false
 safe_margin = 0.001
 script = ExtResource("1_s8srl")
@@ -284,7 +360,6 @@ debug_color = Color(0.988235, 0.0980392, 0, 0.419608)
 sprite_frames = SubResource("SpriteFrames_2iimc")
 animation = &"powerup"
 autoplay = "idle"
-frame_progress = 0.171789
 
 [node name="ShoesSprite" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -334,6 +409,7 @@ one_shot = true
 
 [node name="AbilityTooltip" type="Label" parent="Gui"]
 visible = false
+texture_filter = 1
 offset_top = 76.0
 offset_right = 160.0
 offset_bottom = 90.0
@@ -343,6 +419,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="OrbCount" type="Label" parent="Gui"]
+texture_filter = 1
 offset_left = 120.0
 offset_right = 158.0
 offset_bottom = 23.0
@@ -351,9 +428,14 @@ label_settings = SubResource("LabelSettings_s8usa")
 horizontal_alignment = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Gui/OrbCount"]
-position = Vector2(39, 31)
+position = Vector2(45, 30)
 scale = Vector2(2, 2)
 texture = ExtResource("6_wigh0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gp1b7")
+}
 
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

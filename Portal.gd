@@ -78,3 +78,4 @@ func activate():
 	rotation_speed = active_rotation_speed;
 	label.text = "Press W to enter"
 	label.visible = true;
+	Global.portal_active = true;

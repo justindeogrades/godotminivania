@@ -34,7 +34,7 @@ texture = ExtResource("2_2ak0s")
 [node name="Path" type="Sprite2D" parent="."]
 texture = ExtResource("3_d2qm7")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["Portal"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 7)
