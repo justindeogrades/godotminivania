@@ -1,8 +1,5 @@
 extends Node
 
-var red_level_scene_path = ("res://RedLevel.tscn");
-var blue_level_scene_path = ("res://BlueLevel.tscn");
-
 var queued_scene_path = " ";
 var current_scene_node : Node2D
 var player : Node2D;
@@ -10,7 +7,7 @@ var player : Node2D;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	queued_scene_path = red_level_scene_path;
+	queued_scene_path = Global.purple_level_scene_path;
 	current_scene_node = load(queued_scene_path).instantiate()
 	$Levels.add_child(current_scene_node);
 	#var player = load("res://Characters/Player.tscn").instantiate()

@@ -6,11 +6,15 @@ enum ability {
 	GHOST
 }
 
+var red_level_scene_path = ("res://Levels/RedLevel.tscn");
+var blue_level_scene_path = ("res://Levels/BlueLevel.tscn");
+var purple_level_scene_path = ("res://Levels/PurpleLevel.tscn");
+
 var warp_pos = Vector2(0,0);
 var warp_scene_path = " ";
 var warp_dir = 0;
 var main_menu_created = false;
-var ability_unlocked = [false, false, false];
+var ability_unlocked = [true, true, true];
 var orbs_collected = 0;
 var orbs_to_spawn_id = [true, true, true, true, true, true, true, true]
 var portal_active = false;

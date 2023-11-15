@@ -1,9 +1,9 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b1vmkb4dmwqml"]
 
-[ext_resource type="Texture2D" uid="uid://c1f16gidqsiqr" path="res://Sprites/hazards sheet.png" id="1_py21h"]
+[ext_resource type="Texture2D" uid="uid://ciy6keug5bhfh" path="res://Levels/hazards sheet.png" id="1_hs2pw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ggcmf"]
-texture = ExtResource("1_py21h")
+texture = ExtResource("1_hs2pw")
 texture_region_size = Vector2i(8, 8)
 0:0/animation_columns = 2
 0:0/animation_speed = 10.0
@@ -53,6 +53,22 @@ texture_region_size = Vector2i(8, 8)
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1, -4, 1, -4, 1, 4, -1, 4)
+0:3/animation_columns = 2
+0:3/animation_speed = 10.0
+0:3/animation_frame_0/duration = 1.0
+0:3/animation_frame_1/duration = 1.0
+0:3/0 = 0
+0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:3/0/physics_layer_0/angular_velocity = 0.0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -1, 4, -1, 4, 1, -4, 1)
+2:3/animation_columns = 2
+2:3/animation_speed = 10.0
+2:3/animation_frame_0/duration = 1.0
+2:3/animation_frame_1/duration = 1.0
+2:3/0 = 0
+2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(1, -4, 1, 4, -1, 4, -1, -4)
 
 [resource]
 tile_size = Vector2i(8, 8)

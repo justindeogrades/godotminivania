@@ -64,6 +64,11 @@ func _ready():
 
 func _physics_process(delta):
 	
+	if is_colliding_with_tile("Ghost Tiles"):
+		print_debug("Colliding with ghost tile");
+	else:
+		print_debug("Not colliding");
+	
 	orb_count.text = "x" + str(Global.orbs_collected);
 	
 	# Add the gravity.
@@ -82,7 +87,7 @@ func _physics_process(delta):
 	if is_on_floor():
 		double_jump_ready = true
 		dash_ready = true
-		if not dead and not is_colliding_with_tile("Ghost Tiles"):
+		if not dead and not is_colliding_with_tile("Ghost Tiles") and not is_on_wall():
 			floor_pos_update_frame += 1;
 			if floor_pos_update_frame >= floor_pos_update_frames_interval:
 				last_pos_on_floor = position;
@@ -105,40 +110,23 @@ func _physics_process(delta):
 		
 			
 		if Input.is_action_just_pressed("dash") and Global.ability_unlocked[Global.ability.DASH] and dash_ready:
-			dashing = true;
-			dash_ready = false;
-			dash_frame = 0;
-			switch_to_dash_hitbox();
-			if animated_sprite.flip_h:
-				dash_velocity_multiplier = -1
-			else:
-				dash_velocity_multiplier = 1
-			emit_particle_burst(Vector3(0,dash_velocity_multiplier,0));
-			
-		
+			enter_dash_state();
+
 		if dashing:
 			velocity.x = dash_velocity * dash_velocity_multiplier;
 			velocity.y = 0;
 			if dash_frame > max_dash_frames:
-				dash_frame = 0;
-				switch_to_normal_hitbox();
-				dashing = false;
+				exit_dash_state();
 			dash_frame += 1;
 			
 		if Input.is_action_just_pressed("down") and Global.ability_unlocked[Global.ability.GHOST] and ghost_ready:
-			ghosted = true;
-			ghost_ready = false;
-			shoes_sprite.show();
-		
+			enter_ghost_state();
+
 		if ghosted:
 			get_parent().get_node("Ghost Tiles").modulate = Color(1, 1, 1, 1)
 			set_collision_mask_value (8, true);
 			if ghost_frame >= max_ghost_frames:
-				get_parent().get_node("Ghost Tiles").modulate = Color(1, 1, 1, 0.384)
-				ghost_frame = 0;
-				ghosted = false;
-				shoes_sprite.hide();
-				set_collision_mask_value (8, false);
+				exit_ghost_state();
 			ghost_frame += 1
 		elif not ghost_ready:
 			if ghost_cooldown_frame < max_ghost_cooldown_frames:
@@ -221,10 +209,11 @@ func switch_to_normal_hitbox():
 	dash_hitbox.disabled = true;
 	
 func death():
+	exit_dash_state();
+	exit_ghost_state();
 	dead = true;
 	player_control = false;
 	animated_sprite.hide();
-	shoes_sprite.hide();
 	emit_particle_burst(Vector2.ZERO);
 	
 func respawn():
@@ -237,6 +226,34 @@ func respawn():
 	dashing = false;
 	ghosted = false;
 	player_control = true;
+
+func enter_dash_state():
+	dashing = true;
+	dash_ready = false;
+	dash_frame = 0;
+	switch_to_dash_hitbox();
+	if animated_sprite.flip_h:
+		dash_velocity_multiplier = -1
+	else:
+		dash_velocity_multiplier = 1
+	emit_particle_burst(Vector3(0,dash_velocity_multiplier,0));
+
+func exit_dash_state():
+	dash_frame = 0;
+	switch_to_normal_hitbox();
+	dashing = false;
+
+func enter_ghost_state():
+	ghosted = true;
+	ghost_ready = false;
+	shoes_sprite.show();
+
+func exit_ghost_state():
+	get_parent().get_node("Ghost Tiles").modulate = Color(1, 1, 1, 0.384)
+	ghost_frame = 0;
+	ghosted = false;
+	shoes_sprite.hide();
+	set_collision_mask_value (8, false);
 
 func enter_powerup_state():
 	player_control = false;
