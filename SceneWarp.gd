@@ -14,9 +14,20 @@ func _ready():
 func _process(delta):
 	pass
 
-
-func _on_body_entered(body):
-	Global.warp_pos = warp_to_pos
-	Global.warp_dir = body.direction.x;
-	emit_signal("player_entered");
-	get_tree().get_root().get_node("SceneManager").get_node("LevelTransition").begin_scene_transition(warp_to_scene_path);
+func _on_area_entered(area):
+	if area.is_in_group("RoomDetector"):
+		Global.warp_pos = warp_to_pos
+		
+		if area.get_parent().animated_sprite.flip_h:
+			Global.warp_dir = -1;
+		else:
+			Global.warp_dir = 1;
+		
+		if area.get_parent().dashing:
+			Global.dash_on_warp = true;
+		else:
+			Global.dash_on_warp = false;
+		
+		print_debug(str(Global.warp_dir))
+		emit_signal("player_entered");
+		get_tree().get_root().get_node("SceneManager").get_node("LevelTransition").begin_scene_transition(warp_to_scene_path);

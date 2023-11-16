@@ -21,6 +21,7 @@ func _process(delta):
 func change_scene_to(scene_path):
 	queued_scene_path = scene_path;
 	current_scene_node.queue_free();
+	print_debug(str(queued_scene_path));
 	current_scene_node = load(queued_scene_path).instantiate()
 	$Levels.call_deferred("add_child", current_scene_node);
 	#add_child(current_scene_node);

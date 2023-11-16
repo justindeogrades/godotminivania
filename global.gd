@@ -13,6 +13,7 @@ var purple_level_scene_path = ("res://Levels/PurpleLevel.tscn");
 var warp_pos = Vector2(0,0);
 var warp_scene_path = " ";
 var warp_dir = 0;
+var dash_on_warp = false;
 var main_menu_created = false;
 var ability_unlocked = [true, true, true];
 var orbs_collected = 0;
