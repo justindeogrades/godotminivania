@@ -20,6 +20,7 @@ extends CharacterBody2D
 @onready var animation_player : AnimationPlayer = $AnimationPlayer;
 @onready var gui : CanvasLayer = $Gui
 @onready var tooltip_timer : Timer = $TooltipTimer;
+@onready var ghost_bar : ProgressBar = $GhostBar;
 
 var double_jump_velocity = jump_velocity * 0.66
 var spawn_point = Vector2(0, 0);
@@ -63,11 +64,6 @@ func _ready():
 	update_animation();
 
 func _physics_process(delta):
-	
-	if is_colliding_with_tile("Ghost Tiles"):
-		print_debug("Colliding with ghost tile");
-	else:
-		print_debug("Not colliding");
 	
 	orb_count.text = "x" + str(Global.orbs_collected);
 	
@@ -123,16 +119,17 @@ func _physics_process(delta):
 			enter_ghost_state();
 
 		if ghosted:
-			get_parent().get_node("Ghost Tiles").modulate = Color(1, 1, 1, 1)
-			set_collision_mask_value (8, true);
+			ghost_bar.value = max_ghost_frames - ghost_frame;
 			if ghost_frame >= max_ghost_frames:
 				exit_ghost_state();
 			ghost_frame += 1
 		elif not ghost_ready:
 			if ghost_cooldown_frame < max_ghost_cooldown_frames:
 				ghost_cooldown_frame += 1;
+				ghost_bar.value = ghost_cooldown_frame;
 			else:
 				ghost_cooldown_frame = 0;
+				ghost_bar.visible = false;
 				ghost_ready = true;
 		
 		if Input.is_action_just_pressed("up") and is_in_portal_range and Global.portal_active:
@@ -155,6 +152,7 @@ func _physics_process(delta):
 			velocity = Vector2.ZERO;
 			visible = false;
 			get_tree().quit();
+	
 	
 	update_animation()
 	move_and_slide()
@@ -247,6 +245,10 @@ func enter_ghost_state():
 	ghosted = true;
 	ghost_ready = false;
 	shoes_sprite.show();
+	set_collision_mask_value (8, true);
+	get_parent().get_node("Ghost Tiles").modulate = Color(1, 1, 1, 1);
+	ghost_bar.max_value = max_ghost_frames;
+	ghost_bar.visible = true;
 
 func exit_ghost_state():
 	get_parent().get_node("Ghost Tiles").modulate = Color(1, 1, 1, 0.384)
@@ -254,6 +256,7 @@ func exit_ghost_state():
 	ghosted = false;
 	shoes_sprite.hide();
 	set_collision_mask_value (8, false);
+	ghost_bar.max_value = max_ghost_cooldown_frames;
 
 func enter_powerup_state():
 	player_control = false;

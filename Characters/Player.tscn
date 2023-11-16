@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bmrxvp84pylld"]
+[gd_scene load_steps=43 format=3 uid="uid://bmrxvp84pylld"]
 
 [ext_resource type="Texture2D" uid="uid://c4qr2aycapvsd" path="res://Sprites/pete sheet.png" id="1_q87dr"]
 [ext_resource type="Script" path="res://Characters/Player.gd" id="1_s8srl"]
@@ -340,6 +340,14 @@ _data = {
 "enter_portal": SubResource("Animation_0ot4a")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n115j"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8m4i"]
+bg_color = Color(1, 1, 1, 1)
+corner_detail = 1
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 rotation = 3.14159
 slide_on_ceiling = false
@@ -437,6 +445,17 @@ texture = ExtResource("6_wigh0")
 libraries = {
 "": SubResource("AnimationLibrary_gp1b7")
 }
+
+[node name="GhostBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -4.00004
+offset_top = 4.99996
+offset_right = 3.99996
+offset_bottom = 5.99996
+theme_override_styles/background = SubResource("StyleBoxFlat_n115j")
+theme_override_styles/fill = SubResource("StyleBoxFlat_s8m4i")
+value = 100.0
+show_percentage = false
 
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
