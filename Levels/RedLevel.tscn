@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://b2ipayab6acru"]
 
-[ext_resource type="Script" path="res://Levels/RedLevel.gd" id="1_l0f83"]
+[ext_resource type="Script" path="res://Levels/Level.gd" id="1_l2703"]
 [ext_resource type="TileSet" uid="uid://cu3gw87g3uvi7" path="res://Tilesets/background.tres" id="2_yiayw"]
 [ext_resource type="TileSet" uid="uid://b1vmkb4dmwqml" path="res://Tilesets/hazards.tres" id="3_kx8g7"]
 [ext_resource type="TileSet" uid="uid://5ty0ghq1d5ik" path="res://Tilesets/terrain.tres" id="4_evxsn"]
@@ -20,7 +20,7 @@ size = Vector2(215, 128)
 size = Vector2(20, 16)
 
 [node name="RedLevel" type="Node2D"]
-script = ExtResource("1_l0f83")
+script = ExtResource("1_l2703")
 
 [node name="Background" type="TileMap" parent="."]
 tile_set = ExtResource("2_yiayw")

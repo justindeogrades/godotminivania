@@ -11,7 +11,6 @@ func _ready():
 	if Global.dash_on_warp:
 		player.enter_dash_state();
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
