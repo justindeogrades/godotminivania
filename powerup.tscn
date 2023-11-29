@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://j37vyqdl2b7u" path="res://Sprites/powerup.png" id="2_gtt0o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0neje"]
-size = Vector2(6, 7)
+size = Vector2(6, 11)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xaqwy"]
 

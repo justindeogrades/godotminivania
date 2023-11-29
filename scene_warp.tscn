@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlmhm"]
 size = Vector2(20, 16)
 
-[node name="SceneWarp" type="Area2D"]
+[node name="SceneWarp" type="Area2D" groups=["SceneWarps"]]
 script = ExtResource("1_ptwdq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

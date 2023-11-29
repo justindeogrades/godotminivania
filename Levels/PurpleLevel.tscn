@@ -120,7 +120,7 @@ position = Vector2(-132, 156)
 [node name="BlueWarp" parent="." instance=ExtResource("8_plbes")]
 position = Vector2(946, 1)
 scale = Vector2(1, 4)
-warp_to_pos = Vector2(0, -10)
+warp_to_pos = Vector2(-16, -8)
 warp_to_scene_path = "res://Levels/BlueLevel.tscn"
 
 [node name="PinkWarp" parent="." instance=ExtResource("8_plbes")]

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://chs5v8ro6m35f" path="res://Sprites/orb.png" id="2_256h2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqvik"]
-size = Vector2(4, 4)
+size = Vector2(4, 8)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j155g"]
 

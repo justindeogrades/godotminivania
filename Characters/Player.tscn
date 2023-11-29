@@ -254,7 +254,7 @@ orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ht2dl"]
-size = Vector2(4, 8)
+size = Vector2(1, 0.999997)
 
 [sub_resource type="LabelSettings" id="LabelSettings_fdwht"]
 line_spacing = 1.0
@@ -388,6 +388,7 @@ randomness = 1.0
 [node name="RoomDetector" type="Area2D" parent="." groups=["RoomDetector"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoomDetector"]
+position = Vector2(-7.60554e-06, 3)
 shape = SubResource("RectangleShape2D_ht2dl")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
