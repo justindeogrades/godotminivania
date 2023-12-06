@@ -6,9 +6,11 @@ enum ability {
 	GHOST
 }
 
-var red_level_scene_path = ("res://Levels/RedLevel.tscn");
-var blue_level_scene_path = ("res://Levels/BlueLevel.tscn");
+
 var purple_level_scene_path = ("res://Levels/PurpleLevel.tscn");
+var blue_level_scene_path = ("res://Levels/BlueLevel.tscn");
+var pink_level_scene_path = ("res://Levels/PinkLevel.tscn");
+var orange_level_scene_path = ("res://Levels/OrangeLevel.tscn");
 
 var warp_pos = Vector2(-36, 56);
 var warp_scene_path = " ";

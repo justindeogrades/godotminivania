@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://drqct8ftlgw0i"]
+[gd_scene load_steps=7 format=3 uid="uid://drqct8ftlgw0i"]
 
 [ext_resource type="Script" path="res://LevelTransition.gd" id="1_5uuc4"]
+[ext_resource type="AudioStream" uid="uid://642h2vdg7tif" path="res://Music/purple.ogg" id="2_wtq1w"]
 
 [sub_resource type="Animation" id="Animation_jpymf"]
 length = 0.001
@@ -26,7 +27,7 @@ tracks/0/path = NodePath("ColorRect:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.6),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
@@ -41,7 +42,7 @@ tracks/0/path = NodePath("ColorRect:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.6),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
@@ -66,5 +67,9 @@ color = Color(0, 0, 0, 0)
 libraries = {
 "": SubResource("AnimationLibrary_vcxn0")
 }
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_wtq1w")
+autoplay = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
