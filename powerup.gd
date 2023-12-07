@@ -3,7 +3,8 @@ extends Node2D
 @export var ability_to_unlock : int;
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	if Global.ability_unlocked[ability_to_unlock]:
+		queue_free();
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

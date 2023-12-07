@@ -116,6 +116,7 @@ position = Vector2(484, -4)
 
 [node name="Orb2" parent="." instance=ExtResource("7_yeulp")]
 position = Vector2(-132, 156)
+orb_id = 1
 
 [node name="BlueWarp" parent="." instance=ExtResource("8_plbes")]
 position = Vector2(946, 1)
