@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var ring : Sprite2D = $Ring
-@onready var label : Label = $Label
+@onready var ring : Sprite2D = $Ring;
+@onready var label : Label = $Label;
 
 var lock_scene_path = "res://lock.tscn"
 var lock = [];
@@ -74,6 +74,7 @@ func reset_locks():
 	unlock_interval_frame_at = unlock_interval_frames_max;
 
 func activate():
+	$AudioStreamPlayer.play();
 	active = true;
 	rotation_speed = active_rotation_speed;
 	label.text = "Press W to enter"

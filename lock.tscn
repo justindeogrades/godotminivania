@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkjt8frwh31b2"]
+[gd_scene load_steps=8 format=3 uid="uid://bkjt8frwh31b2"]
 
 [ext_resource type="Texture2D" uid="uid://hc71682rqs1y" path="res://Sprites/lock sheet.png" id="1_he7dp"]
 [ext_resource type="Script" path="res://Lock.gd" id="2_8fj0n"]
+[ext_resource type="AudioStream" uid="uid://binwqqy3vdql4" path="res://Sfx/lock.ogg" id="3_hvfn3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tev4q"]
 atlas = ExtResource("1_he7dp")
@@ -29,11 +30,9 @@ animations = [{
 lifetime_randomness = 0.13
 particle_flag_disable_z = true
 direction = Vector3(0, 1, 0)
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 80.0
 initial_velocity_max = 120.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 
 [node name="Lock" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_apjd8")
@@ -47,3 +46,6 @@ process_material = SubResource("ParticleProcessMaterial_301co")
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
+
+[node name="LockSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_hvfn3")

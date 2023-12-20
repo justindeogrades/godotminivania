@@ -1,10 +1,16 @@
-[gd_scene load_steps=43 format=3 uid="uid://bmrxvp84pylld"]
+[gd_scene load_steps=49 format=3 uid="uid://bmrxvp84pylld"]
 
 [ext_resource type="Texture2D" uid="uid://c4qr2aycapvsd" path="res://Sprites/pete sheet.png" id="1_q87dr"]
 [ext_resource type="Script" path="res://Characters/Player.gd" id="1_s8srl"]
 [ext_resource type="Texture2D" uid="uid://kcpqjqdpton2" path="res://Sprites/shoes sheet.png" id="3_plovu"]
 [ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="4_6bi5o"]
+[ext_resource type="AudioStream" uid="uid://y2sv6grwyyy0" path="res://Sfx/jump.ogg" id="6_67vfs"]
 [ext_resource type="Texture2D" uid="uid://chs5v8ro6m35f" path="res://Sprites/orb.png" id="6_wigh0"]
+[ext_resource type="AudioStream" uid="uid://ix4laqp7ioey" path="res://Sfx/dash.ogg" id="7_gxhjb"]
+[ext_resource type="AudioStream" uid="uid://dwku6ulkywyln" path="res://Sfx/death.ogg" id="8_5vw2f"]
+[ext_resource type="AudioStream" uid="uid://bvv07705abxrp" path="res://Sfx/powerup.ogg" id="9_tebgg"]
+[ext_resource type="AudioStream" uid="uid://70xj3gwso6nw" path="res://Sfx/orb.ogg" id="10_keono"]
+[ext_resource type="AudioStream" uid="uid://tflwxxfjitwi" path="res://Sfx/ghost.ogg" id="11_kclk6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfnl8"]
 size = Vector2(4, 8)
@@ -455,6 +461,24 @@ theme_override_styles/background = SubResource("StyleBoxFlat_n115j")
 theme_override_styles/fill = SubResource("StyleBoxFlat_s8m4i")
 value = 100.0
 show_percentage = false
+
+[node name="DoubleJumpSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_67vfs")
+
+[node name="DashSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_gxhjb")
+
+[node name="DeathSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5vw2f")
+
+[node name="PowerupSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_tebgg")
+
+[node name="OrbSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_keono")
+
+[node name="GhostSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_kclk6")
 
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

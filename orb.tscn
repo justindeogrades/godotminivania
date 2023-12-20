@@ -17,7 +17,7 @@ spread = 180.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.1
 
-[node name="Orb" type="Area2D"]
+[node name="Orb" type="Area2D" groups=["Orbs"]]
 script = ExtResource("1_23otj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

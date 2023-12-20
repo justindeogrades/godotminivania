@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var dash_velocity = 200
 @export var max_dash_frames = 20;
 @export var max_ghost_frames = 180;
-@export var max_powerup_frames = 30;
+@export var max_powerup_frames = 360;
 @export var max_ghost_cooldown_frames = 90;
 @export var death_frames_to_respawn = 120;
 @export var floor_pos_update_frames_interval = 10;
@@ -21,6 +21,13 @@ extends CharacterBody2D
 @onready var gui : CanvasLayer = $Gui
 @onready var tooltip_timer : Timer = $TooltipTimer;
 @onready var ghost_bar : ProgressBar = $GhostBar;
+
+@onready var double_jump_sfx : AudioStreamPlayer = $DoubleJumpSfx;
+@onready var dash_sfx : AudioStreamPlayer = $DashSfx;
+@onready var death_sfx : AudioStreamPlayer = $DeathSfx;
+@onready var powerup_sfx : AudioStreamPlayer = $PowerupSfx;
+@onready var orb_sfx : AudioStreamPlayer = $OrbSfx;
+@onready var ghost_sfx : AudioStreamPlayer = $GhostSfx;
 
 var double_jump_velocity = jump_velocity * 0.66
 var spawn_point = Vector2(0, 0);
@@ -96,6 +103,7 @@ func _physics_process(delta):
 			elif  Global.ability_unlocked[Global.ability.DOUBLEJUMP] and double_jump_ready and not dashing:
 				velocity.y = double_jump_velocity
 				emit_particle_burst(Vector3(0,1,0));
+				double_jump_sfx.play();
 				double_jump_ready = false
 
 		direction = Input.get_vector("left", "right", "up", "down");
@@ -213,6 +221,7 @@ func death():
 	player_control = false;
 	animated_sprite.hide();
 	emit_particle_burst(Vector2.ZERO);
+	death_sfx.play();
 	
 func respawn():
 	spawn_point = last_pos_on_floor;
@@ -226,6 +235,7 @@ func respawn():
 	player_control = true;
 
 func enter_dash_state():
+	dash_sfx.play();
 	dashing = true;
 	dash_ready = false;
 	dash_frame = 0;
@@ -242,6 +252,7 @@ func exit_dash_state():
 	dashing = false;
 
 func enter_ghost_state():
+	ghost_sfx.play();
 	ghosted = true;
 	ghost_ready = false;
 	shoes_sprite.show();
@@ -259,6 +270,7 @@ func exit_ghost_state():
 	ghost_bar.max_value = max_ghost_cooldown_frames;
 
 func enter_powerup_state():
+	powerup_sfx.play();
 	player_control = false;
 	dashing = false;
 	ghosted = false;
@@ -310,6 +322,9 @@ func _on_room_detector_area_entered(area):
 	if area.is_in_group("Portal"):
 		is_in_portal_range = true;
 		portal_pos = area.get_parent().position;
+	
+	if area.is_in_group("Orbs"):
+		orb_sfx.play();
 
 
 func _on_timer_timeout():

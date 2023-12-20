@@ -1,18 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://b31e22mx2asir"]
+[gd_scene load_steps=9 format=3 uid="uid://b31e22mx2asir"]
 
 [ext_resource type="Script" path="res://Portal.gd" id="1_qh33u"]
 [ext_resource type="Texture2D" uid="uid://bovtfxyd3ylos" path="res://Sprites/portal ring.png" id="2_2ak0s"]
 [ext_resource type="Texture2D" uid="uid://b0xsbeum5iv38" path="res://Sprites/portal path.png" id="3_d2qm7"]
 [ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="4_asq5y"]
+[ext_resource type="AudioStream" uid="uid://pn4oksipoqv2" path="res://Sfx/portal.ogg" id="5_non01"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_64gwb"]
 particle_flag_disable_z = true
 direction = Vector3(0, 0, 0)
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 51.61
 initial_velocity_max = 58.06
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k5wpb"]
 size = Vector2(40, 34)
@@ -49,6 +48,9 @@ offset_bottom = -16.0
 text = "Collect 8 more orbs"
 label_settings = SubResource("LabelSettings_3fjjf")
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_non01")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

@@ -1,6 +1,7 @@
 extends AnimatedSprite2D
 
 @onready var particles : GPUParticles2D = $GPUParticles2D
+@onready var lock_sfx : AudioStreamPlayer = $LockSfx;
 
 var unlocked = false;
 # Called when the node enters the scene tree for the first time.
@@ -13,6 +14,7 @@ func _process(delta):
 	pass
 
 func unlock():
+	lock_sfx.play();
 	frame = 1;
 	particles.emitting = true;
 	unlocked = true;
