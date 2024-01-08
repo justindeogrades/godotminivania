@@ -420,6 +420,7 @@ wait_time = 4.0
 one_shot = true
 
 [node name="Gui" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="AbilityTooltip" type="Label" parent="Gui"]
 visible = false

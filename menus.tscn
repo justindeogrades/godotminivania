@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://yseageb7nbnb"]
+[gd_scene load_steps=11 format=3 uid="uid://yseageb7nbnb"]
 
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_u65u7"]
 [ext_resource type="FontFile" uid="uid://bjtqxsp1mkeqg" path="res://Fonts/disposabledroid-bb.regular.ttf" id="2_q8kft"]
@@ -19,22 +19,138 @@ font_size = 8
 font = ExtResource("2_q8kft")
 font_size = 8
 
+[sub_resource type="Animation" id="Animation_v7uce"]
+resource_name = "fade_in"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainMenu:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Title:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MainMenu")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"activate"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_nfcym"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainMenu:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Title:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MainMenu")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MainMenu")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"deactivate"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0e4u2"]
+_data = {
+"fade_in": SubResource("Animation_v7uce"),
+"fade_out": SubResource("Animation_nfcym")
+}
+
 [node name="Menus" type="CanvasLayer"]
 
 [node name="Title" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
 offset_right = 61.0
 offset_bottom = 16.0
 text = "PIMPWAVE"
 label_settings = SubResource("LabelSettings_5ekr4")
 
 [node name="MainMenu" type="VBoxContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 3.0
-offset_top = -35.0
+offset_top = -40.0
 offset_right = 28.0
-offset_bottom = -3.0
+offset_bottom = 19.0
 grow_vertical = 0
 pivot_offset = Vector2(0, 32)
 size_flags_horizontal = 0
@@ -66,6 +182,12 @@ focus_neighbor_bottom = NodePath("../Play")
 focus_mode = 2
 text = "Quit"
 label_settings = SubResource("LabelSettings_qf6px")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MainMenu"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_0e4u2")
+}
 
 [connection signal="focus_entered" from="MainMenu/Play" to="MainMenu" method="_on_play_focus_entered"]
 [connection signal="focus_exited" from="MainMenu/Play" to="MainMenu" method="_on_play_focus_exited"]

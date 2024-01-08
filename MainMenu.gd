@@ -1,5 +1,6 @@
 extends VBoxContainer
 
+var active = false;
 var player : Node2D;
 var default_colour = Color(1, 1, 1, 0.5);
 var focus_colour = Color(1, 1, 1, 1);
@@ -13,6 +14,7 @@ func _ready():
 	player = get_parent().get_parent().player;
 	player.player_control = false;
 	Global.main_menu_created = true;
+	$AnimationPlayer.play("fade_in");
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,9 +30,10 @@ func _on_play_focus_exited():
 	$Play.label_settings.font_color = default_colour;
 
 func _on_play_gui_input(event):
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and active:
 		player.player_control = true;
-		get_parent().queue_free();
+		player.gui.visible = true;
+		$AnimationPlayer.play("fade_out");
 
 func _on_options_focus_entered():
 	$Options.label_settings.font_color = focus_colour;
@@ -39,7 +42,7 @@ func _on_options_focus_exited():
 	$Options.label_settings.font_color = default_colour;
 
 func _on_options_gui_input(event):
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and active:
 		$Options.label_settings.font_size = 3;
 		$Options.text = "You don't get 'options', you play the game the way I intended, fucker."
 
@@ -51,5 +54,12 @@ func _on_quit_focus_exited():
 	$Quit.label_settings.font_color = default_colour;
 
 func _on_quit_gui_input(event):
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and active:
 		get_tree().quit();
+
+
+func activate():
+	active = true;
+
+func deactivate():
+	active = false;
