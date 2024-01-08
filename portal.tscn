@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b31e22mx2asir"]
+[gd_scene load_steps=12 format=3 uid="uid://b31e22mx2asir"]
 
 [ext_resource type="Script" path="res://Portal.gd" id="1_qh33u"]
 [ext_resource type="Texture2D" uid="uid://bovtfxyd3ylos" path="res://Sprites/portal ring.png" id="2_2ak0s"]
@@ -20,6 +20,42 @@ size = Vector2(40, 34)
 font = ExtResource("4_asq5y")
 font_size = 8
 
+[sub_resource type="LabelSettings" id="LabelSettings_w78y3"]
+font = ExtResource("4_asq5y")
+
+[sub_resource type="Animation" id="Animation_4d0ir"]
+resource_name = "fade_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Winscreen/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(0, 0, 0, 0.780392)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Winscreen/Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sdj6k"]
+_data = {
+"fade_in": SubResource("Animation_4d0ir")
+}
+
 [node name="Portal" type="Node2D"]
 script = ExtResource("1_qh33u")
 
@@ -39,7 +75,7 @@ texture = ExtResource("3_d2qm7")
 position = Vector2(0, 7)
 shape = SubResource("RectangleShape2D_k5wpb")
 
-[node name="Label" type="Label" parent="."]
+[node name="OrbsToCollectLabel" type="Label" parent="."]
 visible = false
 offset_left = -33.0
 offset_top = -39.0
@@ -51,6 +87,30 @@ horizontal_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_non01")
+
+[node name="Winscreen" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Winscreen"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 160.0
+offset_bottom = 90.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Winscreen"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 160.0
+offset_bottom = 90.0
+text = "You win!
+
+Thanks for playing!"
+label_settings = SubResource("LabelSettings_w78y3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sdj6k")
+}
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

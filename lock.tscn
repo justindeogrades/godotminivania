@@ -29,10 +29,10 @@ animations = [{
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_301co"]
 lifetime_randomness = 0.13
 particle_flag_disable_z = true
-direction = Vector3(0, 1, 0)
+direction = Vector3(0, -1, 0)
 initial_velocity_min = 80.0
 initial_velocity_max = 120.0
-gravity = Vector3(0, 0, 0)
+gravity = Vector3(0, 175, 0)
 
 [node name="Lock" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_apjd8")
@@ -43,6 +43,7 @@ script = ExtResource("2_8fj0n")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
 process_material = SubResource("ParticleProcessMaterial_301co")
+lifetime = 3.0
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0

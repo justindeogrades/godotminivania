@@ -16,7 +16,7 @@ func _process(delta):
 func unlock():
 	lock_sfx.play();
 	frame = 1;
-	particles.emitting = true;
+	particles.restart();
 	unlocked = true;
 
 func lock():

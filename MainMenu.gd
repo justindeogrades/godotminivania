@@ -38,6 +38,11 @@ func _on_options_focus_entered():
 func _on_options_focus_exited():
 	$Options.label_settings.font_color = default_colour;
 
+func _on_options_gui_input(event):
+	if Input.is_action_just_pressed("ui_accept"):
+		$Options.label_settings.font_size = 3;
+		$Options.text = "You don't get 'options', you play the game the way I intended, fucker."
+
 
 func _on_quit_focus_entered():
 	$Quit.label_settings.font_color = focus_colour;

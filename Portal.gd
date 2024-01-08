@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var ring : Sprite2D = $Ring;
-@onready var label : Label = $Label;
+@onready var label : Label = $OrbsToCollectLabel;
 
 var lock_scene_path = "res://lock.tscn"
 var lock = [];
@@ -52,9 +52,10 @@ func _process(delta):
 					label.visible = true;
 			unlock_interval_frame_at += 1;
 		else:
-			label.visible = true;
+			#label.visible = true;
 			if Input.is_action_just_pressed("up"):
-				label.text = "You win!";
+				label.visible = false;
+				$AnimationPlayer.play("fade_in");
 
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("RoomDetector"):

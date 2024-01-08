@@ -159,7 +159,6 @@ func _physics_process(delta):
 		else:
 			velocity = Vector2.ZERO;
 			visible = false;
-			get_tree().quit();
 	
 	
 	update_animation()
@@ -217,6 +216,8 @@ func switch_to_normal_hitbox():
 func death():
 	exit_dash_state();
 	exit_ghost_state();
+	ghost_cooldown_frame = max_ghost_cooldown_frames;
+	ghost_bar.visible = false;
 	dead = true;
 	player_control = false;
 	animated_sprite.hide();
